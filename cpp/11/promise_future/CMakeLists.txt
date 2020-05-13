@@ -11,3 +11,6 @@ target_link_libraries(demo_promise_move ${DEP_LIBS})
 
 add_executable(demo_promise_exception demo_promise_exception_01.cpp)
 target_link_libraries(demo_promise_exception ${DEP_LIBS})
+
+add_executable(demo_packaged_task_01 demo_packaged_task_01.cpp)
+target_link_libraries(demo_packaged_task_01 ${DEP_LIBS})

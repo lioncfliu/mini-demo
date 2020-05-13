@@ -116,6 +116,7 @@ ListNode * ReverseListAndFindKthNodePlus(ListNode * src_list, const int k, int &
             std::cout<< "found "<< k <<"'th element:"<< kthVal <<std::endl;
         }
 
+        // reverse list
         if (! slice) { //head of reverse
             slice = current;
             current = current->next;
@@ -136,6 +137,7 @@ ListNode *create_node(const int &val)
     ListNode *n = new ListNode;
     n->val = val;
     n->next = nullptr;
+    return n;
 }
 
 ListNode * create_list(const std::vector<int> &list) 
