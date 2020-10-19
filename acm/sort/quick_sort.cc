@@ -4,18 +4,35 @@
 
 using sort_function = std::function<void(int * /* array */, int /* left */, int /* right */)>;
 
-// Time cost: O(n^2)
-// Space cost: O(n)
-void inertt_sort(int *array, int left, int right) {
-  // 每次从未排序的中序列提取第一个元素，在已排序的序列中找到插入位置插入，采用emplace模式。
-  for (int i = left + 1; i < right; ++i) {
-    int tmp = array[i];
-    int j = i;
-    for (; j > left && array[j] > tmp; --j) {
-      array[j] = array[j - 1];
+int get_middle_index(int *array, int left, int right) {
+  int middle = array[left];
+  int l = left, r = right - 1;
+  while (l < r) {
+    while (l < r && array[r] > middle) --r; 
+    if (l < r) {
+      array[l] = array[r];
+      ++l;
     }
-    std::swap(array[j], tmp);
+   
+    while (l < r && array[l] < middle) ++l;
+    if (l < r) {
+      array[r] = array[l];
+      --r;
+    }
+    std::cout<< "middle index, l, r:" << l << "," << r << std::endl;
   }
+  array[l] = middle;
+  return l;
+}
+
+// Time cost: O(n log2 n)
+// Space cost: O(n log2 n)
+void quick_sort(int *array, int left, int right) {
+  if (left > right) return;
+  
+  int middle_index = get_middle_index(array, left, right);
+  quick_sort(array, left, middle_index - 1); 
+  quick_sort(array, middle_index + 1, right); 
 }
 
 void display_array(int *array, int left, int right) {
@@ -24,7 +41,7 @@ void display_array(int *array, int left, int right) {
   std::cout << "]" << std::endl;
 }
 
-static sort_function sort_int_array = insert_sort;
+static sort_function sort_int_array = quick_sort;
 
 void run_all_testings() {
   std::vector<int> array_01{9, 8, 7, 6, 5, 4, 3, 2, 1};
